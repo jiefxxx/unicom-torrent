@@ -1,0 +1,18 @@
+{% raw %}
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">S{{pc.torrent.Name}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <button type="button" ng-click="editMovie()" class="btn btn-success col-sm-1">Edit movie</button>
+    <button type="button" ng-click="editTvShow()" class="btn btn-success col-sm-1">Edit tv show</button>
+    <table st-table="torrentEdited" st-safe-src="pc.torrent.Files" st-set-filter="myStrictFilter" class="table table-sm table-hover text-nowrap">
+        <tr st-select-row="file" st-select-mode="multiple" ng-repeat="file in torrentEdited">
+            <td>{{file.Path}}</td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="pc.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="pc.cancel()">Cancel</button>
+</div>
+{% endraw %}
