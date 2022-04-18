@@ -204,6 +204,7 @@ class Server:
                 time.sleep(10)
 
     async def serve_request(self, message_id, data):
+        print(data)
         data = json.loads(data)
         handler = self.get_api_handler(data["id"])
         data["parameters"]["server"] = self
