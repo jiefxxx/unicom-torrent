@@ -55,8 +55,8 @@ async def connector(server):
         info_hash = await server.queue.async_q.get()
         for hook in server.torrent_manager.get_hook(info_hash):
             try:
+                server.torrent_manager.set_working(info_hash, hook["path"])
                 data = await server.request("mediaserver", "POST", "/mediaserver/api/video", {"user": "torrent"}, hook)
-                print(data)
                 server.torrent_manager.callback_hook(info_hash, hook["path"])
             except Exception as e:
                 server.torrent_manager.callback_hook(info_hash, hook["path"], err=str(e))

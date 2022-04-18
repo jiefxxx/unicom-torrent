@@ -238,7 +238,8 @@ class Server:
         await write_message(self.writer, 1, pending.id, message.encode())
         await pending.wait()
         self.remove_pending(pending)
-        print(pending.error)
+        if pending.error:
+            raise pending.error
         return pending.get()
 
     async def request(self, target, method, path, parameters, input_value):

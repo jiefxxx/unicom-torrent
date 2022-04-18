@@ -234,8 +234,15 @@ class TorrentManager:
 
     def execute_hooks(self, info_hash):
         for i in range(0, len(self.hooks[info_hash])):
-            self.hooks[info_hash][i]["state"] = "working"
+            self.hooks[info_hash][i]["state"] = "pending"
         self.connector_queue.put(info_hash)
+
+    def set_working(self, info_hash, path):
+        hook = self.get_hook(info_hash, path)
+        if hook is None:
+            print(f"hookError::not found {info_hash}")
+            return
+        hook["state"] = "working"
 
     def get_hook(self, info_hash, path=None):
         if path is None:
@@ -249,7 +256,7 @@ class TorrentManager:
         hook = self.get_hook(info_hash, path)
         if hook is None:
             print(f"hookError::not found {info_hash}")
-            hook["state"] = "error"
+            return
         elif err is not None:
             print(f"hookError::{err} {info_hash}")
             hook["state"] = "error"
