@@ -71,7 +71,7 @@ app.controller('torrentTable', function($scope, $http, $uibModal, $interval){
                 method: 'GET',
                 url: 'torrent/api/torrent/'+selected[i].InfoHash+'?full=1'
             }).then(function (response) {
-                modalTorrentReturn($uibModal, response[0].data).then(function (torrent) {
+                modalTorrentReturn($uibModal, response.data[0]).then(function (torrent) {
                     send_activate_torrent(torrent)
                 }, function (torrent){
                     send_drop_torrent(torrent)
