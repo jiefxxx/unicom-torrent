@@ -32,6 +32,7 @@
 				  	<div class="input-group-append">
 						<input type="file" style="display:none" name="torrent" id="torrent" onchange="angular.element(this).scope().uploadFile(this.files)"/>
 						<button type="button" class="btn btn-outline-success" ng-click="getFiles()">add</button>
+						<button type="button" class="btn btn-outline-success" ng-click="editFile()">edit</button>
 						<button type="button" class="btn btn-outline-secondary" ng-click="pause()">pause</button>
 						<button type="button" class="btn btn-outline-danger" ng-click="remove()">delete</button>
 					</div>
