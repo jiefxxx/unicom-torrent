@@ -63,6 +63,23 @@ app.controller('torrentTable', function($scope, $http, $uibModal, $interval){
         });
     };
 
+    $scope.editFile = function() {
+        var selected = getSelection($scope.torrentCollection);
+        for(var i = 0;i<selected.length;i++){
+            var data = {};
+            $http({
+                method: 'GET',
+                url: 'torrent/api/torrent/'+selected[i].InfoHash+'?full=1'
+            }).then(function (response) {
+                modalTorrentReturn($uibModal, response[0].data).then(function (torrent) {
+                    send_activate_torrent(torrent)
+                }, function (torrent){
+                    send_drop_torrent(torrent)
+                });
+            });
+        }
+    };
+
     $scope.pause = function(){
         var selected = getSelection($scope.torrentCollection);
         for(var i = 0;i<selected.length;i++){
