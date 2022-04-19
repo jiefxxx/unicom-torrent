@@ -16,6 +16,7 @@ def gen_state(h, state):
         return "paused"
     return state_str[state]
 
+
 def gen_hooks_state(hooks, info_hash):
     ret = "waiting"
     if not info_hash in hooks:
@@ -27,6 +28,8 @@ def gen_hooks_state(hooks, info_hash):
             return "error"
         elif hook["state"] == "completed":
             ret = "completed"
+        elif hook["state"] == "pending":
+            ret = "pending"
     return ret
 
 
