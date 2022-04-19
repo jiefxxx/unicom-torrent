@@ -178,7 +178,6 @@ class Server:
 
     async def serve(self):
         self.reader, self.writer = await asyncio.open_unix_connection(self.addr)
-        print(self.config())
         await send_init(self.writer, self.config())
         self.id = 1
         print("connected")
@@ -204,7 +203,6 @@ class Server:
                 time.sleep(10)
 
     async def serve_request(self, message_id, data):
-        print(data)
         data = json.loads(data)
         handler = self.get_api_handler(data["id"])
         data["parameters"]["server"] = self
