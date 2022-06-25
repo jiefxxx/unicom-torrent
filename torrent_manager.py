@@ -2,7 +2,6 @@ import base64
 import json
 import random
 import threading
-import time
 import os
 import libtorrent as lt
 
@@ -113,7 +112,7 @@ class FastResume:
 
 
 class TorrentManager:
-    def __init__(self, download_path="downloads", fast_resume_config="fast_resume.json", connector_queue=None):
+    def __init__(self, download_path="downloads", fast_resume_config="fast_resume.json", server=None):
         self.ses = lt.session()
         r = random.randrange(10000, 50000)+5
         self.ses.listen_on(r, r + 10)
@@ -121,7 +120,7 @@ class TorrentManager:
         self.torrents = []
         self.hooks = {}
         self.run = True
-        self.connector_queue = connector_queue
+        self.server = server
 
         self.fast_resume = FastResume(fast_resume_config)
 
@@ -238,7 +237,7 @@ class TorrentManager:
     def execute_hooks(self, info_hash):
         for i in range(0, len(self.hooks[info_hash])):
             self.hooks[info_hash][i]["state"] = "pending"
-        self.connector_queue.put(info_hash)
+        self.server.send_bg_worker("send_worker", info_hash)
 
     def set_working(self, info_hash, path):
         hook = self.get_hook(info_hash, path)

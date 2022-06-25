@@ -5,7 +5,7 @@ modalTorrentReturn = function(modal ,torrent){
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: '/torrent/modalTorrent',
+        templateUrl: '/Torrent/modal/torrent',
         controller: 'ModalTorrentCtrl',
         controllerAs: 'pc',
         windowClass: 'show',
@@ -29,7 +29,7 @@ app.controller('torrentTable', function($scope, $http, $uibModal, $interval){
     };
 
     $scope.refresh = function(){
-        $http.get("torrent/api/torrent")
+        $http.get("Torrent/api/torrent")
         .then(function (response) {
             for(var i = 0;i<response.data.length;i++){
                 var ok = false;
@@ -51,7 +51,7 @@ app.controller('torrentTable', function($scope, $http, $uibModal, $interval){
         var fd = new FormData();
         $http({
             method: 'POST',
-            url: '/torrent/api/torrent',
+            url: '/Torrent/api/torrent',
             data: files[0],
             headers: {'Content-Type': undefined}
         }).then(function (response) {
@@ -69,7 +69,7 @@ app.controller('torrentTable', function($scope, $http, $uibModal, $interval){
             var data = {};
             $http({
                 method: 'GET',
-                url: 'torrent/api/torrent/'+selected[i].InfoHash+'?full=1'
+                url: 'Torrent/api/torrent/'+selected[i].InfoHash+'?full=1'
             }).then(function (response) {
                 modalTorrentReturn($uibModal, response.data[0]).then(function (torrent) {
                     send_activate_torrent(torrent)
@@ -88,7 +88,7 @@ app.controller('torrentTable', function($scope, $http, $uibModal, $interval){
             data["Pause"] = true
             $http({
                 method: 'PUT',
-                url: 'torrent/api/torrent/'+selected[i].InfoHash,
+                url: 'Torrent/api/torrent/'+selected[i].InfoHash,
                 data: data
             }).then(function (response) {
             });
@@ -108,7 +108,7 @@ app.controller('torrentTable', function($scope, $http, $uibModal, $interval){
     send_drop_torrent = function(torrent){
         $http({
             method: 'DELETE',
-            url: 'torrent/api/torrent/'+torrent.InfoHash
+            url: 'Torrent/api/torrent/'+torrent.InfoHash
         }).then(function (response) {
             for(var j = 0;j<$scope.torrentCollection.length;j++){
                 if ($scope.torrentCollection[j].InfoHash == torrent.InfoHash){
@@ -149,7 +149,7 @@ app.controller('torrentTable', function($scope, $http, $uibModal, $interval){
         }
         $http({
             method: 'PUT',
-            url: 'torrent/api/torrent/'+torrent.InfoHash,
+            url: 'Torrent/api/torrent/'+torrent.InfoHash,
             data: data
         }).then(function (response) {
         });

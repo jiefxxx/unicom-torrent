@@ -1,2 +1,21 @@
-stream = "/tmp/test2.stream"
-download_path = "/media/storage/download"
+name = "Torrent"
+kind = {Python={}}
+after = "MediaServer"
+templates_path = "templates/"
+tags= {web_app_root="/Torrent"}
+
+[[endpoints]]
+regex="/Torrent"
+kind = {View = {template="Torrent/index.html", apis={nodes={node="system", api="nodes", parameters={tag="web_app_root"}}}}}
+
+[[endpoints]]
+regex="/Torrent/js(/.*)"
+kind = {Static={path="js/"}}
+
+[[endpoints]]
+regex="/Torrent/modal/torrent"
+kind = {View = {template="Torrent/modalTorrent.html", apis={}}}
+
+[[endpoints]]
+regex="/Torrent/api/torrent(?:/([0-9a-f]+))?"
+kind = {Rest = {api="TorrentHandler"}}
