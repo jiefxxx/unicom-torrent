@@ -237,7 +237,7 @@ class TorrentManager:
     def execute_hooks(self, info_hash):
         for i in range(0, len(self.hooks[info_hash])):
             self.hooks[info_hash][i]["state"] = "pending"
-        self.server.send_bg_worker("send_worker", info_hash)
+        self.server.send_bg_worker_thread_safe("send_worker", info_hash)
 
     def set_working(self, info_hash, path):
         hook = self.get_hook(info_hash, path)
